@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en-IN" dir="ltr">
+  <head>
+    <title>ATTACCO HACKER IN CORSO</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Vins"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <link rel="stylesheet" href="./style.css">
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+    <style>
+        body {
+            background-color: #ffe6f2; /* Colore di sfondo rosa chiaro */
+            margin: 0;
+            font-family: Arial, sans-serif; /* Font generico */
+        }
+
+        @keyframes heartfade {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .heart {
+            z-index: 999;
+            animation: heartfade 6s linear;
+            position: absolute;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            background-color: #ff3366; /* Colore rosso */
+            position: absolute;
+            height: 30px;
+            width: 45px;
+            border-radius: 15px 0px 0px 15px;
+        }
+
+        .heart:before {
+            transform: rotate(45deg);
+        }
+
+        .heart:after {
+            left: 10.5px;
+            transform: rotate(135deg);
+        }
+         /* Nuovo stile per ridimensionare l'immagine */
+        .gif_container img 
+        {
+        width: 350px; /* Larghezza ridimensionata */
+        height: auto; /* Mantieni proporzioni */
+        display: block;
+        margin: 0 auto; /* Centra immagine */
+        border-radius: 10px; /* Arrotonda angoli (opzionale) */
+        }
+        .moving-images img 
+        {
+        position: absolute; /* Posizionamento assoluto */
+        width: 100px; /* Larghezza delle immagini */
+        height: auto; /* Mantieni proporzioni */
+        animation: moveRandom 10s infinite; /* Effetto movimento */
+        }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3EWCZHDCG9"></script>
+  </head>
+  <body>
+        <div id="ask" class="container">
+            <div >
+                <h1 class = "header_text">Ma quindi è mercoledì?? </h1>
+            </div>
+            <div class="gif_container">
+                <img src="image/io2.webp" alt="Cute animated illustration">
+            </div>
+            <div class = "buttons">
+                <button class="btn" id = "yesButton" onclick="nextPage()">Yes</button>
+                <button class="btn" id="noButton" onmouseover="moveButton()" onclick="moveButton()">No</button>
+            </div>
+            <video id="novideo" width="0" height="0" controls>
+                <source src="image/SadMoment.mp4" 
+                   type="video/mp4">
+            </video>
+        </div>
+        <div id="ans" class="container">
+            <div >
+                <h1 class = "header_text">Tu mihi dees</h1>
+            </div>
+            <div class="gif_container">
+                <img src="image/ans.gif" alt="Cute animated illustration">
+            </div>
+            <audio id="Never">
+                <source src="image/NeverGonnaGiveYouUp.mp3" type="audio/mp3">
+            </audio>
+        </div>
+         <!-- Aggiungi un contenitore per immagini in movimento -->
+        <div id="movingImages" class="moving-images"></div>
+    </body> 
+    <script>
+
+        var debounce = function(fn, t = 1000) {
+            let timer;
+            return function(...args) {
+                clearTimeout(timer);
+                timer = setTimeout(() => fn(...args), t);
+            }
+        };
+
+
+        function playAudio()
+        {
+            document.getElementById('novideo').play();
+        }
+
+        function nextPage() {
+            //window.location.href = "yes.html";
+            document.getElementById('ans').style.display = 'block';
+            document.getElementById('ask').style.display = 'none';
+            document.getElementById('novideo').pause();
+            document.getElementById('Never').play();
+        }
+
+        function moveButton() {
+            var x = Math.random() * (window.innerWidth - document.getElementById('noButton').offsetWidth);
+            var y = Math.random() * (window.innerHeight - document.getElementById('noButton').offsetHeight);
+            document.getElementById('noButton').style.left = `${x}px`;
+            document.getElementById('noButton').style.top = `${y}px`;
+            playAudio();
+        }
+        var brd = document.createElement("DIV");
+    document.body.insertBefore(brd, document.getElementById("board"));
+
+    const duration = 3000;
+    const speed = 0.5;
+    const cursorXOffset = 0;
+    const cursorYOffset = -5;
+
+    var hearts = [];
+
+    function generateHeart(x, y, xBound, xStart, scale) {
+        var heart = document.createElement("DIV");
+        heart.setAttribute('class', 'heart');
+        brd.appendChild(heart);
+        heart.time = duration;
+        heart.x = x;
+        heart.y = y;
+        heart.bound = xBound;
+        heart.direction = xStart;
+        heart.style.left = heart.x + "px";
+        heart.style.top = heart.y + "px";
+        heart.scale = scale;
+        heart.style.transform = "scale(" + scale + "," + scale + ")";
+        if (hearts == null)
+            hearts = [];
+        hearts.push(heart);
+        return heart;
+    }
+    
+
+    var before = Date.now();
+    var id = setInterval(frame, 5);
+    var gr = setInterval(check, 100);
+
+    function frame() {
+        var current = Date.now();
+        var deltaTime = current - before;
+        before = current;
+        for (i in hearts) {
+            var heart = hearts[i];
+            heart.time -= deltaTime;
+            if (heart.time > 0) {
+                heart.y -= speed;
+                heart.style.top = heart.y + "px";
+                heart.style.left = heart.x + heart.direction * heart.bound * Math.sin(heart.y * heart.scale / 30) / heart.y * 200 + "px";
+            } else {
+                heart.parentNode.removeChild(heart);
+                hearts.splice(i, 1);
+            }
+        }
+    }
+    function addMovingImages() {
+    const images = [
+        "Elena1.png", // Percorso immagine 1
+        "Elena2.png", // Percorso immagine 2
+        "Elena3.png"  // Percorso immagine 3
+    ];
+
+    const container = document.getElementById("movingImages"); // Contenitore per immagini
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    images.forEach((src) => {
+        const img = document.createElement("img");
+        img.src = src; // Aggiungi il percorso immagine
+        container.appendChild(img);
+
+        function moveImage() {
+            const x = Math.random() * (windowWidth - 100); // Posizione orizzontale casuale
+            const y = Math.random() * (windowHeight - 100); // Posizione verticale casuale
+            img.style.left = `${x}px`;
+            img.style.top = `${y}px`;
+        }
+
+        setInterval(moveImage, 2000); // Cambia posizione ogni 2 secondi
+        moveImage(); // Posizionamento iniziale
+    });
+}
+
+function nextPage() {
+    document.getElementById('ans').style.display = 'block';
+    document.getElementById('ask').style.display = 'none';
+    document.getElementById('novideo').pause();
+    document.getElementById('Never').play();
+    addMovingImages(); // Avvia il movimento delle immagini
+}
+
+    function check() {
+        var start = 1 - Math.round(Math.random()) * 2;
+        var scale = Math.random() * Math.random() * 0.8 + 0.2;
+        var bound = 30 + Math.random() * 20;
+        var x = Math.random() * window.innerWidth;
+        var y = Math.random() * window.innerHeight;
+        generateHeart(x, y, bound, start, scale);
+    }
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3EWCZHDCG9');
+
+    </script> 
+</html>
